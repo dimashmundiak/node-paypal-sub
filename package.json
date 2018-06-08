@@ -1,0 +1,25 @@
+{
+  "name": "chakpaypal",
+  "version": "1.0.0",
+  "description": "Paypal Subscription and Webhook Notification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oluyoung/node-paypal-sub.git"
+  },
+  "keywords": [
+    "paypal",
+    "subscription",
+    "nodejs",
+    "webhooks"
+  ],
+  "author": "Oluyoung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oluyoung/node-paypal-sub/issues"
+  },
+  "homepage": "https://github.com/oluyoung/node-paypal-sub#readme"
+}
