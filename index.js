@@ -1,7 +1,20 @@
-const express = require('express');
 const hbs = require('express-handlebars');
 const paypal = require('paypal-rest-sdk');
-// const billing_plans = require('./objects_json/billingcreate.js');
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+
+const credentials = {
+  key: fs.readFileSync('./self-signed/client-key.pem'),
+  cert: fs.readFileSync('./self-signed/client-cert.pem')
+};
+
+const app = express();
+//app.listen(3000, () => console.log('Server started'));
+
+// Create HTTPS server with credentials and express middleware
+https.createServer(credentials, app).listen(443);
+
 
 //Import SDK
 var sdk = require('./sdk.js');
@@ -11,10 +24,6 @@ paypal.configure({
   'client_id': 'AURg6NmIC2HFvKhFt-ov9oEaeDZWKj_o23sOg67rUKOwr51md1oTuny-AH3tu5HebLg2jCSCh6a-uHqD',
   'client_secret': 'EIhUT1ssc9YxvHevYmb0tv-o7V4fiisClKDHSljBcIulqCveWLR9xgfcd_TEP-xa2-m2_3QgHKVME1Mh'
 });
-
-const app = express();
-app.listen(3000, () => console.log('Server started'));
-
 
 
 // view engine setup
@@ -42,3 +51,25 @@ app.get('/billing/success', (req, res) =>{
   
 // Route to go to if Subscription Failed
 app.get('/billing/cancel', (req, res) => res.send('Subscription Failed'));
+
+// Route for invoice creation
+app.get('/invoice_create', (req, res) => {
+  sdk.invoiceCreate();
+});
+
+// Webhook Callback
+const WEBHOOK_ID = '37J13431BX100203Y';
+
+app.get('/create_webhook_listener', (req, res) => {
+  sdk.webhookCreate();
+});
+
+app.post('/callback', (req, res) => { 
+  console.log(res);
+  console.log(req);
+});
+
+app.post('/webhook_listener', (req, res) => { 
+  console.log(res);
+  console.log(req);
+});

@@ -9,8 +9,8 @@ let plan_cycle = 0;
 let plan_type = "REGULAR" // REGULAR/TRIAL
 let payment_defintion_type = "INFINITE" // INFINITE/FIXED
 
-let cancel_url = "http://localhost:3000/billing/cancel";
-let return_url = "http://localhost:3000/billing/success";
+let cancel_url = "https://127.0.0.1/billing/cancel";
+let return_url = "https://127.0.0.1/billing/success";
 
 let billingPlanMonthly = {
   "description": plan_description,
