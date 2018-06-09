@@ -1,3 +1,10 @@
+const paypal = require('paypal-rest-sdk');
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AURg6NmIC2HFvKhFt-ov9oEaeDZWKj_o23sOg67rUKOwr51md1oTuny-AH3tu5HebLg2jCSCh6a-uHqD',
+  'client_secret': 'EIhUT1ssc9YxvHevYmb0tv-o7V4fiisClKDHSljBcIulqCveWLR9xgfcd_TEP-xa2-m2_3QgHKVME1Mh'
+});
+
 // JSON Object for holding the plan creation's information
 
 let plan_name = "Subscription";
@@ -90,3 +97,11 @@ module.exports = {
   "billingPlanMonthly": billingPlanMonthly,
   "billingPlanYearly": billingPlanYearly
 }
+
+paypal.billingPlan.create(billingPlanMonthly, (err, billingPlan) => {
+        if (err) throw err;
+        else {
+            console.log(billingPlan);
+            
+        }
+    });

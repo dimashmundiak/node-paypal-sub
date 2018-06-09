@@ -1,10 +1,12 @@
-// export the object that becomes the webhook JSON to be submitted
+// This is the object to Create a Webhook Listener
 
 // webhook listener URL
+// This is the URL to attach your listener to that will be notified of events
 const URL = 'https://127.0.0.1/webhook_listener';
 
 module.exports = {
     "url": URL,
+    // These are the types of events you want to be notified of.
     "event_types": [
         {"name": "BILLING.PLAN.CREATED"},
         {"name": "BILLING.PLAN.UPDATED"},
