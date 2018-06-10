@@ -1,7 +1,4 @@
 module.exports = (billing_plan_id) => {
-    var isoDate = new Date();
-/*    isoDate.setSeconds(isoDate.getSeconds() + 4);
-    isoDate.toISOString().slice(0, 19) + 'Z';*/
 
     // Subscription starts a day after
     var d = new Date(Date.now()+86400000);

@@ -148,21 +148,7 @@ module.exports =  {
     });
   },
 
-  // Webhook Creation
-  webhookCreate: function(){
-    return paypal.notification.webhook.create(webhook_json, function (error, webhook) {
-        if (error) {
-            console.log(error.response);
-            throw error;
-        } else {
-            console.log("Create Webhook Response");
-            console.log(webhook);
-
-            for(let i = 0; i<webhook.event_types.length;i++){
-              console.log(webhook.event_types[i].description);
-            }
-        }
-    });
-  }
+  // Webhook Get/Search
+  webhookGet: function(){}
 
 };

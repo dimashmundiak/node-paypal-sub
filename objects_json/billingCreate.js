@@ -54,7 +54,7 @@ let billingPlanMonthly = {
         }
     ],
     "type": payment_defintion_type
-}
+};
 
 let billingPlanYearly = {
   "description": plan_description,
@@ -91,17 +91,9 @@ let billingPlanYearly = {
         }
     ],
     "type": payment_defintion_type
-}
+};
 
 module.exports = {
   "billingPlanMonthly": billingPlanMonthly,
   "billingPlanYearly": billingPlanYearly
-}
-
-paypal.billingPlan.create(billingPlanMonthly, (err, billingPlan) => {
-        if (err) throw err;
-        else {
-            console.log(billingPlan);
-            
-        }
-    });
+};

@@ -60,16 +60,14 @@ app.get('/invoice_create', (req, res) => {
 // Webhook Callback
 const WEBHOOK_ID = '37J13431BX100203Y';
 
-app.get('/create_webhook_listener', (req, res) => {
-  sdk.webhookCreate();
-});
-
+// Webhook Listeners
+// Miust be defined here first to be registered on the paypal developer dashboard
 app.post('/callback', (req, res) => { 
+  console.log(JSON.stringify(req));
   console.log(res);
-  console.log(req);
 });
 
 app.post('/webhook_listener', (req, res) => { 
-  console.log(res);
   console.log(req);
+  console.log(res);
 });
