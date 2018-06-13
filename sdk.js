@@ -37,13 +37,12 @@ module.exports =  {
   // Update the Billing plan to active
   // because default state is just 'creaeted'
   billingPlanUpdate: function(billingPlanId, res){
-    let billing_plan_update_attributes = [
-      {
+    let billing_plan_update_attributes = [{
         "op": "replace",
         "path": "/",
         "value": {"state": "ACTIVE"}
-      }
-    ];
+      }];
+
 
     //get the billing plan that is to be changed
     return paypal.billingPlan.get(billingPlanId, (error, billingPlan) => {
@@ -60,7 +59,6 @@ module.exports =  {
               } else {
                   // alert
                   console.log('Your plan has been activated');
-
                   let billingAgreementAttributes = billing_agreement(billingPlanId);
                   this.billingAgreementCreate(billingAgreementAttributes, res);
               }
@@ -71,6 +69,7 @@ module.exports =  {
 
   // Need billing agreement between you and user
   billingAgreementCreate: function(billingAgreementAttributes, res){
+
       // Use activated billing plan to create agreement
       return paypal.billingAgreement.create(billingAgreementAttributes, (error, billingAgreement) => {
         if (error) {
@@ -94,7 +93,7 @@ module.exports =  {
 
                     // See billing_agreements/execute.js to see example for executing agreement 
                     // after you have payment token
-                    this.billingExecuteAgreement(token);
+                    this.billingExecuteAgreement(res, token);
                 }
             }
         }
@@ -102,7 +101,8 @@ module.exports =  {
   },
 
   // Execute billing agreement so user can approve
-  billingExecuteAgreement: function(paymentToken){
+  billingExecuteAgreement: function(res, paymentToken){
+
     //Retrieve payment token appended as a parameter to the redirect_url specified in
     //billing plan was created. It could also be saved in the user session
     paypal.billingAgreement.execute(paymentToken, {}, function (error, billingAgreement) {
@@ -111,15 +111,16 @@ module.exports =  {
             throw error;
         } else {
             console.log("Billing Agreement Execute Response");
-            console.log(billingAgreement);
+            //console.log(billingAgreement);
         }
     });
   },
 
-  // Create Invoice
-  invoiceCreate: function(){
+  // Create Invoice for customer
+  invoiceCreate: function(res){
     // alias the invoiceSend() from the module.exports to avoid scope problems
     let invoiceSend = this.invoiceSend;
+
     return paypal.invoice.create(invoice_json, function (error, invoice) {
         if (error) {
           console.log(error.response);
@@ -127,15 +128,15 @@ module.exports =  {
         }
         else {
             console.log("Create Invoice Response");
-            console.log(invoice);
+            // console.log(invoice);
             // Send invoice.id to tell PayPal to send invoice to user
-            invoiceSend(invoice.id);
+            invoiceSend(res, invoice.id);
         }
     });
   },
 
-  // Send Invoice
-  invoiceSend: function(invoiceId){
+  // Send Invoice to customer
+  invoiceSend: function(res, invoiceId){
     return paypal.invoice.send(invoiceId, function (error, rv) {
         if (error) {
             console.log(error.response);
@@ -144,11 +145,29 @@ module.exports =  {
             console.log("Send Invoice Response");
             console.log(rv);
             // TODO Response
+            res.send('Invoice Sent');
         }
     });
   },
 
   // Webhook Get/Search
-  webhookGet: function(){}
+  webhookGet: function(res){
+    return paypal.notification.webhookEvent.list({}, function (error, webhookEvents) {
+      if (error) {
+          console.log(error.response);
+          throw error;
+      } else {
+          console.log("Searching webhookEvents Response");
+          let events = webhookEvents.events;
+          // gets the latest one
+          // so every time the event fires it gets the latest one and calls it
+          let event_type = events[0].event_type;
+          let event_summary = events[0].summary;
+          console.log(event_type);
+          console.log(event_summary);
+          res.redirect(307, '/webhook_listener?ev_type='+event_type);
+      }
+    });
+  }
 
 };

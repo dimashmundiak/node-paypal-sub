@@ -3,6 +3,7 @@ const paypal = require('paypal-rest-sdk');
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
+const request = require('request');
 
 const credentials = {
   key: fs.readFileSync('./self-signed/client-key.pem'),
@@ -54,20 +55,73 @@ app.get('/billing/cancel', (req, res) => res.send('Subscription Failed'));
 
 // Route for invoice creation
 app.get('/invoice_create', (req, res) => {
-  sdk.invoiceCreate();
+  sdk.invoiceCreate(res);
 });
 
-// Webhook Callback
-const WEBHOOK_ID = '37J13431BX100203Y';
 
 // Webhook Listeners
-// Miust be defined here first to be registered on the paypal developer dashboard
-app.post('/callback', (req, res) => { 
-  console.log(JSON.stringify(req));
-  console.log(res);
-});
+// Must be defined here first to be registered on the paypal developer dashboard
+// Can have multiple callbacks for handiling different events
+app.post('/callback', (req, res) => {
+    res.send('POST request to the callback');
+  });
 
-app.post('/webhook_listener', (req, res) => { 
-  console.log(req);
-  console.log(res);
-});
+app.post('/webhook_listener', (req, res) => {
+    res.send('POST request to the WH_Listener');
+    
+    switch (event_type){
+        case "BILLING.PLAN.CREATED":
+            console.log("Billing Plan Created");
+            break;
+        case "BILLING.PLAN.UPDATED":
+            console.log("BILLING PLAN UPDATED");
+            break;
+        case "BILLING.SUBSCRIPTION.CANCELLED":
+            console.log("SUBSCRIPTION CANCELLED");
+            break;
+        case "BILLING.SUBSCRIPTION.CREATED":
+            console.log("SUBSCRIPTION CREATED");
+            break;
+        case "BILLING.SUBSCRIPTION.RE-ACTIVATED":
+            console.log("SUBSCRIPTION RE-ACTIVATED");
+            break;
+        case "BILLING.SUBSCRIPTION.SUSPENDED":
+            console.log("SUBSCRIPTION SUSPENDED");
+            break;
+        case "BILLING.SUBSCRIPTION.UPDATED":
+            console.log("SUBSCRIPTION UPDATED");
+            break;
+        case "PAYMENT.AUTHORIZATION.CREATED":
+            // Handle payment AUTH CREATED
+            console.log('Payment Authorization Created');
+            break;
+        case "PAYMENT.AUTHORIZATION.VOIDED":
+            // Handle payment AUTH VOIDED
+            console.log('Payment Authorization Voided');
+            break;
+        case "INVOICING.INVOICE.CANCELLED":
+            console.log("INVOICE CANCELLED");
+            break;
+        case "INVOICING.INVOICE.CREATED":
+            console.log("INVOICE CREATED");
+            break;
+        case "INVOICING.INVOICE.REFUNDED":
+            console.log("INVOICE REFUNDED");
+            break;
+        case "INVOICING.INVOICE.SCHEDULED":
+            console.log("INVOICE SCHEDULED");
+            break;
+        case "INVOICING.INVOICE.UPDATED":
+            console.log("INVOICE UPDATED");
+            break;
+        case "INVOICING.INVOICE.PAID":
+            console.log("INVOICE PAID");
+            break;
+            // Handle other webhooks
+        default:
+            console.log('break handled');
+            break;
+    };
+    next();
+
+  });
