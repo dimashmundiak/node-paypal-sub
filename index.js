@@ -14,7 +14,7 @@ const app = express();
 
 // Create HTTPS server with credentials and express middleware
 var port = process.env.PORT || 443;
-https.createServer(credentials, app).listen(port, () => console.log('Server started'));
+https.createServer(credentials, app).listen(port, () => console.log(`Server started. Port: ${port}`));
 
 
 //Import SDK
