@@ -90,12 +90,10 @@ app.get('/plans', (req, res) => {
     });
 });
 
-app.post('/webhook_listener', (req, res) => {
-    console.log('Webhook request');
-    console.log(req.body);
-    res.json(req);
-});
-
 app.get('/webhook_listener', (req, res) => {
     res.json(true);
 });
+
+app.post('/webhook', (req, res) => {
+    res.json(req.body);
+})
