@@ -91,6 +91,5 @@ app.get('/plans', (req, res) => {
 });
 
 app.post('/webhook_listener', (req, res) => {
-    console.log(req);
-    console.log(res);
+    console.log(req.body);
 });
