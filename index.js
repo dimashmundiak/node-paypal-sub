@@ -95,3 +95,7 @@ app.post('/webhook_listener', (req, res) => {
     console.log(req.body);
     res.json(req);
 });
+
+app.get('/webhook_listener', (req, res) => {
+    res.json(true);
+});
