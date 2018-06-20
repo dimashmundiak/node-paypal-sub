@@ -92,6 +92,6 @@ app.get('/plans', (req, res) => {
 
 app.post('/webhook_listener', (req, res) => {
     console.log('Webhook request');
-    console.log(req.body);
+    console.log(req);
     res.send('true');
 });
