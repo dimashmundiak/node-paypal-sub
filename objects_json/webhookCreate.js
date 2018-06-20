@@ -2,7 +2,7 @@
 
 // webhook listener URL
 // This is the URL to attach your listener to that will be notified of events
-const URL = 'https://127.0.0.1:443/webhook_listener';
+const URL = 'https://paypal-node.herokuapp.com/webhook_listener';
 
 module.exports = {
     "url": URL,
