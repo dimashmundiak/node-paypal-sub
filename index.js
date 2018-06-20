@@ -103,7 +103,7 @@ app.get('/webhook_listener', (req, res) => {
 
 app.post('/webhook', (req, res) => {
 
-    let webhook = req.body;
+    let webhook = JSON.stringify(req.body);
 
     paypal.notification.webhookEvent.getAndVerify(webhook, function (error, response) {
         if (error) {
