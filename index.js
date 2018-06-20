@@ -10,11 +10,12 @@ const credentials = {
 };
 
 const app = express();
-//app.listen(3000, () => console.log('Server started'));
+var port = process.env.PORT || 443;
+app.listen(port, () => console.log('Server started'));
 
 // Create HTTPS server with credentials and express middleware
-var port = process.env.PORT || 443;
-https.createServer(credentials, app).listen(port, () => console.log(`Server started. Port: ${port}`));
+
+// https.createServer(credentials, app).listen(port, () => console.log(`Server started. Port: ${port}`));
 
 
 //Import SDK
