@@ -9,8 +9,15 @@ const credentials = {
     cert: fs.readFileSync('./self-signed/client-cert.pem')
 };
 
+const bodyParser = require('body-parser');
+
 const app = express();
-var port = process.env.PORT || 443;
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var port = process.env.PORT || 4000;
 app.listen(port, () => console.log('Server started'));
 
 // Create HTTPS server with credentials and express middleware
@@ -95,5 +102,7 @@ app.get('/webhook_listener', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-    res.json(req.body);
+    console.log(req.body);
+
+    res.send(req.body);
 })
