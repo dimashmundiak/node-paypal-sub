@@ -14,7 +14,7 @@ paypal.configure({
 module.exports = {
     // Create Sample Monthly Billing Plan with Trial Period
     createMonthlyPlan: function (res) {
-        return paypal.billingPlan.create(billing_plans.billingPlanMonthly, (err, billingPlan) => {
+        return paypal.billingPlan.create(billing_plans.billingPlanTrial, (err, billingPlan) => {
             if (err) throw err;
             else {
                 // console.log(billingPlan);
@@ -108,27 +108,15 @@ module.exports = {
     // Execute billing agreement so user can approve
     billingExecuteAgreement: function (paymentToken) {
 
-        return paypal.billingAgreement.get(paymentToken, function (error, billingAgreement) {
+        return paypal.billingAgreement.execute(paymentToken, {}, function (error, billingAgreement) {
             if (error) {
                 console.log(error);
                 throw error;
             } else {
-                console.log("Get Billing Agreement");
-
-                //Retrieve payment token appended as a parameter to the redirect_url specified in
-                //billing plan was created. It could also be saved in the user session
-                paypal.billingAgreement.execute(billingAgreement.id, {}, function (error, billingAgreement) {
-                    if (error) {
-                        console.log(error);
-                        throw error;
-                    } else {
-                        console.log("Billing Agreement Execute Response");
-                        console.log(billingAgreement);
-                    }
-                });
+                console.log("Billing Agreement Execute Response");
+                console.log(billingAgreement);
             }
         });
-
 
     },
 
