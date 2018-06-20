@@ -97,21 +97,8 @@ app.get('/plans', (req, res) => {
     });
 });
 
-app.get('/webhook_listener', (req, res) => {
-    res.json(true);
-});
+app.post('/webhook_listener', (req, res) => {
+    console.log(req.body);
 
-app.post('/webhook', (req, res) => {
-
-    let webhook = JSON.stringify(req.body);
-
-    paypal.notification.webhookEvent.getAndVerify(webhook, function (error, response) {
-        if (error) {
-            console.log(error);
-            throw error;
-        } else {
-            console.log(response);
-        }
-    });
-    res.send(true);
+    res.send(req.body);
 })
