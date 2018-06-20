@@ -1,8 +1,8 @@
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AURg6NmIC2HFvKhFt-ov9oEaeDZWKj_o23sOg67rUKOwr51md1oTuny-AH3tu5HebLg2jCSCh6a-uHqD',
-  'client_secret': 'EIhUT1ssc9YxvHevYmb0tv-o7V4fiisClKDHSljBcIulqCveWLR9xgfcd_TEP-xa2-m2_3QgHKVME1Mh'
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'ASl1Q9tQYhebMVdFaOFoeBLf9R2fJBw0z3VwZZDRb0KFF7nf2CGvD1Hjk939m5W8W3wKJzzEfMKRcVnb',
+    'client_secret': 'EB3okxPso6s95JKc90WAzzao_HI1_UV5YRGqpKRB2-nOgLkCpBSQoQp5wTd1LNPi9rX4MBF0ddLbfnG_'
 });
 
 // JSON Object for holding the plan creation's information
@@ -16,12 +16,12 @@ let plan_cycle = 0;
 let plan_type = "REGULAR" // REGULAR/TRIAL
 let payment_defintion_type = "INFINITE" // INFINITE/FIXED
 
-let cancel_url = "https://127.0.0.1/billing/cancel";
-let return_url = "https://127.0.0.1/billing/success";
+let cancel_url = "https://127.0.0.1:443/billing/cancel";
+let return_url = "https://127.0.0.1:443/billing/success";
 
 let billingPlanMonthly = {
-  "description": plan_description,
-  "merchant_preferences": {
+    "description": plan_description,
+    "merchant_preferences": {
         "auto_bill_amount": "yes",
         "cancel_url": cancel_url,
         "initial_fail_amount_action": "continue",
@@ -57,8 +57,8 @@ let billingPlanMonthly = {
 };
 
 let billingPlanYearly = {
-  "description": plan_description,
-  "merchant_preferences": {
+    "description": plan_description,
+    "merchant_preferences": {
         "auto_bill_amount": "yes",
         "cancel_url": cancel_url,
         "initial_fail_amount_action": "continue",
@@ -94,6 +94,6 @@ let billingPlanYearly = {
 };
 
 module.exports = {
-  "billingPlanMonthly": billingPlanMonthly,
-  "billingPlanYearly": billingPlanYearly
+    "billingPlanMonthly": billingPlanMonthly,
+    "billingPlanYearly": billingPlanYearly
 };
