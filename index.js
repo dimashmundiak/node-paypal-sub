@@ -30,8 +30,8 @@ var sdk = require('./sdk.js');
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'ASl1Q9tQYhebMVdFaOFoeBLf9R2fJBw0z3VwZZDRb0KFF7nf2CGvD1Hjk939m5W8W3wKJzzEfMKRcVnb',
-    'client_secret': 'EB3okxPso6s95JKc90WAzzao_HI1_UV5YRGqpKRB2-nOgLkCpBSQoQp5wTd1LNPi9rX4MBF0ddLbfnG_'
+    'client_id': 'AT2nUcKO6rgoHXvHe0zLoN__jvpc2eLtkYv8xVXGQUbfV8cPFMbR-60tvhTPI7EZTKyoZu7bQM0PxZvY',
+    'client_secret': 'EGqA-hhoh48OTswtbwaqYTI6jT1yUAHPbnntn8XYC2JfewMIewI9bdr2thQvzcUZ8y9LAQXs0Y2_xS-x'
 });
 
 
@@ -97,7 +97,7 @@ app.get('/plans', (req, res) => {
     });
 });
 
-app.post('/webhook_listener', (req, res) => {
+app.post('/webhook', (req, res) => {
     console.log(req.body);
 
     res.send(req.body);
